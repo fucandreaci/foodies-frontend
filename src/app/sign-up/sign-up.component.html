@@ -1,0 +1,46 @@
+<div class="box-centrato">
+    <form (ngSubmit)="onSignupSubmit(f)" #f="ngForm">
+        <div class="form-group">
+            <label>Nome</label>
+            <input ngModel #nome="ngModel" name="nome" type="text" class="form-control" placeholder="Inserire il nome" required>
+            <small *ngIf="!nome.valid && nome.touched" class="invalid-feedback d-block">Inserire un nome.</small>
+        </div>
+        <div class="form-group">
+            <label>Cognome</label>
+            <input ngModel #cognome="ngModel" name="cognome" type="text" class="form-control" placeholder="Inserire il cognome" required>
+            <small *ngIf="!cognome.valid && cognome.touched" class="invalid-feedback d-block">Inserire un cognome.</small>
+        </div>
+        <div class="form-group">
+            <label>Username</label>
+            <input ngModel #username="ngModel" name="username" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Inserire il nome utente" required>
+            <small *ngIf="!username.valid && username.touched" class="invalid-feedback d-block">Inserire un nome utente valido.</small>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input ngModel #password="ngModel" name="password" type="password" class="form-control" placeholder="Inserire la password" required>
+            <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">Inserire una password valida.</small>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input ngModel #email="ngModel" name="email" type="text" class="form-control" placeholder="Inserire l'email" required email>
+            <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">Inserire un'email valida.</small>
+        </div>
+        <div class="form-group">
+            <label>Biografia</label>
+            <input ngModel #biografia="ngModel" name="biografia" type="text" class="form-control" placeholder="Inserire la biografia" required minlength="16">
+            <small *ngIf="!biografia.valid && biografia.touched" class="invalid-feedback d-block">Inserire una biografia di almeno 16 caratteri.</small>
+        </div>
+        <div class="form-group">
+            <label>Immagine profilo</label>
+            <input ngModel #immagineProfilo="ngModel" name="immagineProfilo" type="text" class="form-control" placeholder="Inserire il link di un'immagine" required>
+            <small *ngIf="!immagineProfilo.valid && immagineProfilo.touched" class="invalid-feedback d-block">Inserire link valido.</small>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" hidden>
+            <label class="form-check-label" for="exampleCheck1" hidden>Check me out</label>
+        </div>
+        <div>Hai già un account? <a routerLink="/login" Registrati>Esegui l'accesso</a></div>
+         <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Registrati</button>
+         <small class="invalid-feedback d-block">{{ errorMsg }}</small>
+    </form>
+</div>
