@@ -33,12 +33,13 @@ export class UtenteService {
     //   params: httpParams,
     //   responseType: 'json'
     // });
-    return this.http.get<any>(`${this.apiServerUrl}/posts/getAll/?UtenteDAO=` + encodeURIComponent( JSON.stringify(
+    return this.http.get<any>(`${this.apiServerUrl}/posts/getAll/`, {headers:
       {
-        username: 'sadasd',
-        password: 'sadasdadadas'
+        username: localStorage.getItem("username") + "",
+        password: localStorage.getItem("password") + "",
+        'Content-Type': 'application/json; charset=utf-8'
       }
-    ) ))
+     })
   }
 
   // addPersone(p: Persona): Observable<any>{
