@@ -1,0 +1,21 @@
+<div class="box-centrato">
+  <form (ngSubmit)="addPost(f)" #f="ngForm">
+      <div class="form-group">
+          <label>Titolo</label>
+          <input ngModel #titolo="ngModel" name="titolo" type="text" class="form-control" placeholder="Inserire il titolo del post." required>
+          <small *ngIf="!titolo.valid && titolo.touched" class="invalid-feedback d-block">Inserire un titolo.</small>
+      </div>
+      <div class="form-group">
+          <label>Descrizione</label>
+          <input ngModel #descrizione="ngModel" name="descrizione" type="text" class="form-control" placeholder="Inserire la descrizione del post" required>
+          <small *ngIf="!descrizione.valid && descrizione.touched" class="invalid-feedback d-block">Inserire una descrizione.</small>
+      </div>
+      <div class="form-group">
+          <label>Immagine</label>
+          <input ngModel #immagine="ngModel" name="immagine" type="text" class="form-control" placeholder="Inserire il link dell'immagine" required>
+          <small *ngIf="!immagine.valid && immagine.touched" class="invalid-feedback d-block">Inserire un link valido.</small>
+      </div>
+       <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Crea Post</button>
+       <small class="invalid-feedback d-block">{{ errorMsg }}</small>
+  </form>
+</div>

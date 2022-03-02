@@ -9,6 +9,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ProfiloComponent } from './profilo/profilo.component';
+import { NewPostComponent } from './post/new-post/new-post.component';
+import { EditPostComponent } from './post/edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +21,18 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     SignUpComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent,
+    ProfiloComponent,
+    EditPostComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

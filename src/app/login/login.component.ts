@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Utente } from '../models/utente/utente';
+import { Utente } from '../models/utente';
 import { UtenteService } from '../services/utente.service';
 
 @Component({
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
     this.utenteService.login(newUser).subscribe(
       (response: any) => {
         this.router.navigate(['/home']);
-        localStorage.setItem('username', newUser.getUsername());
-        localStorage.setItem('password', newUser.getPassword());
+        localStorage.setItem('username', newUser.username);
+        localStorage.setItem('password', newUser.password);
       },
       (error: HttpErrorResponse) => {
         this.errorMsg = error.error;

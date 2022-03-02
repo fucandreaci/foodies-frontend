@@ -1,0 +1,9 @@
+.box-centrato{
+  width: 700px;
+  height:1000px;
+  margin:15px;
+}
+
+input.ng-invalid.ng-touched{
+border: 1px solid red;
+}

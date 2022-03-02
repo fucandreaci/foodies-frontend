@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
-import { Utente } from '../models/utente/utente';
+import { Utente } from '../models/utente';
+import { Shared } from './shared';
 import { UtenteService } from './utente.service';
 
 @Injectable({
@@ -10,15 +11,17 @@ import { UtenteService } from './utente.service';
 })
 export class AuthGuardService {
 
-  constructor(private utenteService: UtenteService, private route: Router) { }
+  constructor(private utenteService: UtenteService, private route: Router,
+    private shared: Shared) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
     var user = new Utente();
-    user.setUsername(localStorage.getItem('username')!);
-    user.setPassword(localStorage.getItem('password')!);
+    user.username = localStorage.getItem('username')!;
+    user.password = localStorage.getItem('password')!;
 
-    console.log(this.userValid(user))
     if(this.userValid(user)){
+      // IMPOSTO L'USERNAME PER LA NAVBAR
+      this.shared.actualUser = user.username;
       return true;
     } else{
       this.route.navigate(['/']);
@@ -27,10 +30,8 @@ export class AuthGuardService {
   }
 
   public userValid(user: Utente): boolean{
-    if(user.getUsername() === "" || user.getUsername() == null
-    || user.getPassword() === "" || user.getPassword() == null){
-      console.log(user.getUsername())
-      console.log(user.getPassword())
+    if(user.username === "" || user.username == null
+    || user.password === "" || user.password == null){
       return false;
     } else{
       return true;

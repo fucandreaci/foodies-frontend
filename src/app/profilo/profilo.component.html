@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<p style="text-align: center; font-size: 30px;">I miei post:</p>
+<div *ngIf="posts.length == 0">
+  <p style="text-align: center; font-size: 40px; color: rgb(160, 1, 1)">Non ci sono post disponibili.</p>
+</div>
+<button type="button" class="btn btn-success center" routerLink="/new_post">Crea post</button>
+<div *ngFor="let post of posts">
+  <div class="post">
+    <div style="font-weight: bold; margin:10px; display: inline-block"><img src="{{post.utente.immagineProfilo}}" width="30" height="30"> {{ post.utente.username }}</div>
+
+    <span style="float: right; margin: 10px 10px 0 0">
+      <a style="text-decoration: none; color: rgb(223, 0, 0); cursor: pointer;"
+      (click)="deletePost(post.id)">
+        <i style="font-size:24px" class='fas'>&#xf2ed;</i>
+      </a>
+    </span>
+    <span style="float: right; margin: 10px 10px 0 0">
+      <a style="text-decoration: none; color: black; cursor: pointer;"
+      (click)="editPost(post.id)">
+        <i style="font-size:24px" class='fas'>&#xf044;</i>
+      </a>
+    </span>
+
+    <div
+      style="text-align: center; margin-bottom: 5px;
+      font-size: 20px; margin-top: 10px;">{{ post.titolo }}</div>
+
+    <img class="center" src="{{ post.immagine }}" width="590" height="590">
+
+    <div style="margin:10px;">{{ post.descrizione }}</div>
+    <!-- LIKE E UNLIKE -->
+    <div style="font-weight: bold;
+    float: unset; display: inline; margin: 10px;">
+    <span *ngIf="post.likes.length > 0">{{ post.likes.length }} like</span>
+    <span *ngIf="post.likes.length > 0 && post.unlikes.length > 0">, </span>
+    <span *ngIf="post.unlikes.length > 0">{{ post.unlikes.length}} unlike </span>
+    </div>
+
+    <div style="display: inline; float: right; margin: 5px;">
+      <div style="display: inline; margin-right: 10px;"><a style="text-decoration: none; color: black; cursor: pointer">
+        <i style="font-size:24px" class='far'>&#xf164;</i>
+      </a></div>
+      <a style="text-decoration: none; color: black; cursor: pointer;">
+        <i style="font-size:24px" class='far'>&#xf165;</i>
+      </a>
+    </div>
+  </div>
+</div>

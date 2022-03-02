@@ -1,3 +1,51 @@
-<p>home works!</p>
-<button (click)="logout()" class="btn btn-outline-danger">Logout</button>
-<br><button (click)="getPosts()">Get Post</button>
+<app-navbar></app-navbar>
+<div style="text-align: center; margin: 20px;">
+  Filtro parole:
+  <input type="text" [(ngModel)]="filtroTitolo" placeholder="Titolo...">
+  <input type="text" [(ngModel)]="filtroDescrizione" placeholder="Descrizione...">
+  <button (click)="getPostByFiltro()">Cerca Post</button><br>
+
+  Filtra post in base a ultima modifica:
+  da <input type="datetime-local" [(ngModel)]="daDate"> a <input type="datetime-local" [(ngModel)]="aDate">
+  <button (click)="filtraDateDaA()">Cerca Post</button>
+  <p style="color: red; font-size: 20px; text-align: center;">{{ errorMsg }}</p>
+</div>
+<div *ngFor="let post of posts">
+  <div class="post">
+    <div style="font-weight: bold;margin:10px;"><img src="{{post.utente.immagineProfilo}}" width="30" height="30"> {{ post.utente.username }}</div>
+    <div
+      style="text-align: center; margin-bottom: 5px;
+      font-size: 20px; margin-top: 10px; font-weight: bold;">{{ post.titolo }}</div>
+
+    <img class="center" src="{{ post.immagine }}" width="590" height="590">
+
+    <div style="margin:10px;">{{ post.descrizione }}</div>
+
+    <!-- LIKE E UNLIKE -->
+    <div style="font-weight: bold;
+    float: unset; display: inline; margin: 10px;">
+    <span *ngIf="post.likes.length > 0">{{ post.likes.length }} like</span>
+    <span *ngIf="post.likes.length > 0 && post.unlikes.length > 0">, </span>
+    <span *ngIf="post.unlikes.length > 0">{{ post.unlikes.length}} unlike </span>
+    </div>
+
+    <div style="display: inline; float: right; margin: 5px;">
+      <div style="display: inline; margin-right: 0px;"><a style="text-decoration: none; color: black; cursor: pointer" (click)="addLike(post.id)" *ngIf="!liked(post.id)">
+        <i style="font-size:24px" class='far'>&#xf164;</i>
+      </a></div>
+      <div style="display: inline; margin-right: 10px;"><a style="text-decoration: none; color: rgb(24, 206, 0); cursor: pointer;"  *ngIf="liked(post.id)">
+        <i style="font-size:24px" class='fas'>&#xf164;</i>
+      </a></div>
+      <a style="text-decoration: none; color: black; cursor: pointer;" (click)="addUnLike(post.id)" *ngIf="!unliked(post.id)">
+        <i style="font-size:24px" class='far'>&#xf165;</i>
+      </a>
+      <a style="text-decoration: none; color: rgb(206, 0, 0); cursor: pointer;" *ngIf="unliked(post.id)">
+        <i style="font-size:24px" class='fas'>&#xf165;</i>
+      </a>
+    </div>
+  </div>
+  <p style="color: red; font-size: 20px; text-align: center;">{{ post.errore }}</p>
+</div>
+
+<!-- <button (click)="logout()" class="btn btn-outline-danger">Logout</button>
+<br><button (click)="getPosts()">Get Post</button> -->
