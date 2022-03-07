@@ -69,12 +69,29 @@ export class PostService {
     return this.http.post<any>(`${this.apiServerUrl}/posts/getLastUpdateBetween/`, data)
   }
 
+  getLastUpdateBetweenProprietario(user: Utente, from: string, to: string): Observable<any>{
+    const data = {
+      ...user,
+      to: to,
+      from: from
+    }
+    return this.http.post<any>(`${this.apiServerUrl}/posts/ownPostByLastUpdate/`, data)
+  }
+
   getPostByFiltro(post: Post, user: Utente){
     const data = {
       ...user,
       ...post
     }
     return this.http.post<any>(`${this.apiServerUrl}/posts/getTitoloOrDescrizioneContains/`, data)
+  }
+
+  getPostByFiltroProprietario(post: Post, user: Utente){
+    const data = {
+      ...user,
+      ...post
+    }
+    return this.http.post<any>(`${this.apiServerUrl}/posts/getTitoloOrDescrizioneContainsProprietario/`, data)
   }
 
   like(user: Utente, idPost: number): Observable<any>{

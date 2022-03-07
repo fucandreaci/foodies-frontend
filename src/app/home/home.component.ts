@@ -14,6 +14,9 @@ import { UtenteService } from '../services/utente.service';
 })
 export class HomeComponent implements OnInit {
 
+  admin: boolean = false;
+  filtro: boolean = false;
+
   errorMsg!: string;
 
   posts: Post[] = [];
@@ -29,6 +32,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPosts();
+
+    if(localStorage.getItem('username') == "admin" && localStorage.getItem('password') == "1234"){
+      this.admin = true;
+    }
   }
 
   logout(){
@@ -47,6 +54,32 @@ export class HomeComponent implements OnInit {
         console.log(error.error)
       }
     )
+
+    this.filtro = false;
+    this.errorMsg = "";
+  }
+
+  updatePosts(){
+
+    var user = new Utente();
+    user.username = localStorage.getItem('username')!;
+    user.password = localStorage.getItem('password')!;
+    this.postService.getPosts(user).subscribe(
+      (response: any) => {
+        var filteredPosts: Post[] = response;
+        for(let i = 0; i < filteredPosts.length; i++){
+          for(let j = 0; j < this.posts.length; j++){
+            if(filteredPosts[i].id == this.posts[j].id){
+              this.posts.splice(j, 1);
+              this.posts.push(filteredPosts[i]);
+            }
+          }
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.error)
+      }
+    )
   }
 
   addLike(idPost: number){
@@ -56,7 +89,12 @@ export class HomeComponent implements OnInit {
 
     this.postService.like(user, idPost).subscribe(
       (response: any) => {
-        this.getPosts();
+        if(this.filtroDescrizione == ""
+          && this.filtroTitolo == ""){
+          this.getPosts();
+        }else{
+          this.updatePosts();
+        }
       },
       (error: HttpErrorResponse) => {
         let findedPost = this.posts.find(item => item.id == idPost)
@@ -74,7 +112,12 @@ export class HomeComponent implements OnInit {
 
     this.postService.unlike(user, idPost).subscribe(
       (response: any) => {
+        if(this.filtroDescrizione == ""
+        && this.filtroTitolo == ""){
         this.getPosts();
+      }else{
+        this.updatePosts();
+      }
       },
       (error: HttpErrorResponse) => {
         let findedPost = this.posts.find(item => item.id == idPost)
@@ -112,14 +155,23 @@ export class HomeComponent implements OnInit {
   }
 
   getPostByFiltro(){
+    this.filtro = true;
     this.errorMsg = "";
     var user = new Utente();
     user.username = (localStorage.getItem('username')!);
     user.password = (localStorage.getItem('password')!);
 
     var filteredPost = new Post();
-    filteredPost.titolo = this.filtroTitolo;
-    filteredPost.descrizione = this.filtroDescrizione;
+
+    if(this.filtroTitolo != null && this.filtroTitolo !== undefined)
+      filteredPost.titolo = this.filtroTitolo;
+    else
+      filteredPost.titolo = "";
+
+    if(this.filtroDescrizione != null && this.filtroDescrizione !== undefined)
+      filteredPost.descrizione = this.filtroDescrizione;
+    else
+      filteredPost.descrizione = "";
 
     this.postService.getPostByFiltro(filteredPost, user).subscribe(
       (response: any) => {
@@ -127,13 +179,14 @@ export class HomeComponent implements OnInit {
         this.posts = response;
       },
       (error: HttpErrorResponse) => {
-        console.log(error.error)
+        this.posts = [];
         this.errorMsg = "Nessun post trovato."
       }
     )
   }
 
   filtraDateDaA(){
+    this.filtro = true;
     this.errorMsg = "";
     var user = new Utente();
     user.username = (localStorage.getItem('username')!);
@@ -147,10 +200,20 @@ export class HomeComponent implements OnInit {
         this.posts = response;
       },
       (error: HttpErrorResponse) => {
-        console.log(error.error)
-        this.errorMsg = "Nessun post trovato."
+        this.posts = [];
       }
     )
   }
 
+
+  deletePost(idPost: number){
+    this.postService.deletePost(idPost).subscribe(
+      (response) => {
+        this.getPosts();
+      },
+      (error :HttpErrorResponse) => {
+        console.log(error)
+      }
+    )
+  }
 }

@@ -1,3 +1,5 @@
+<app-navbar style="position:fixed; width: 100%; top: 0; z-index: 5;"></app-navbar>
+<div style="margin-top: 80px;"></div>
 <div class="box-centrato">
   <form (ngSubmit)="editPost()" #f="ngForm">
       <div class="form-group">
@@ -16,6 +18,8 @@
           <small *ngIf="!immagine.valid && immagine.touched" class="invalid-feedback d-block">Inserire un link valido.</small>
       </div>
        <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Modifica Post</button>
+       <br>Anteprima immagine:
+       <img style="display: block; margin: 10px;" src="{{actualPost.immagine}}" width="300" height="300">
        <small class="invalid-feedback d-block">{{ errorMsg }}</small>
   </form>
 </div>

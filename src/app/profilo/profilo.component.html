@@ -1,16 +1,43 @@
-<app-navbar></app-navbar>
+<app-navbar style="position:fixed; width: 100%; top: 0; z-index: 5;"></app-navbar>
+<div class="filter-box" style="padding: 20px; position:fixed; text-align: center; margin: 50px 0px 0px 2%; width: 25%; text-align: center; float: left;">
+  <div style="font-size: 23px; margin: auto"><div style="font-weight: bold;">Filtro parole:</div>
+    <input type="text" class="form-control" [(ngModel)]="filtroTitolo" placeholder="Titolo...">
+    <input type="text" class="form-control" [(ngModel)]="filtroDescrizione" placeholder="Descrizione...">
+    <button class="btn btn-light" (click)="getPostByFiltro()">Cerca Post</button><br>
+  </div>
+  <hr>
+  <div style="display: inline;  width: 20%; margin: auto; font-size: 23px;">
+    <div style="font-weight: bold;">Trova i post modificati in un periodo:</div>
+   <div style="font-size: 20px; margin-top: 10px;">da <input type="datetime-local" class="form-control" [(ngModel)]="daDate"></div>
+    <div>a <input type="datetime-local" class="form-control" [(ngModel)]="aDate"></div>
+    <button class="btn btn-light" (click)="filtraDateDaA()">Cerca Post</button>
+  </div>
+  <div style="display: block; margin-top: 15px;"><a style="text-decoration: none; color: rgb(202, 25, 25); cursor: pointer" (click)="getPosts()" *ngIf="filtro">
+    <i style="font-size:35px" class='fas'>&#xf0e2;</i>
+  </a></div>
+
+  <hr>
+  <button class="btn btn-success" routerLink="/new_post">Crea Post</button>
+  <div style="display: block; margin-top: 15px;"><a style="text-decoration: none; color: rgb(202, 25, 25); cursor: pointer" (click)="getPosts()" *ngIf="filtro">
+    <i style="font-size:35px" class='fas'>&#xf0e2;</i>
+  </a></div>
+</div>
+<p style="margin-top: 30px; color: red; font-size: 25px; text-align: center;">{{ errorMsg }}</p>
+<div style="margin-top: 80px;"></div>
+
+
+
 <p style="text-align: center; font-size: 30px;">I miei post:</p>
 <div *ngIf="posts.length == 0">
   <p style="text-align: center; font-size: 40px; color: rgb(160, 1, 1)">Non ci sono post disponibili.</p>
 </div>
-<button type="button" class="btn btn-success center" routerLink="/new_post">Crea post</button>
 <div *ngFor="let post of posts">
-  <div class="post">
-    <div style="font-weight: bold; margin:10px; display: inline-block"><img src="{{post.utente.immagineProfilo}}" width="30" height="30"> {{ post.utente.username }}</div>
+  <div class="post box">
+    <div style="font-weight: bold; margin:10px; display: inline-block"><img class="imgProfilo" *ngIf="post.utente.immagineProfilo" src="{{post.utente.immagineProfilo}}" width="30" height="30"> {{ post.utente.username }}</div>
 
     <span style="float: right; margin: 10px 10px 0 0">
       <a style="text-decoration: none; color: rgb(223, 0, 0); cursor: pointer;"
-      (click)="deletePost(post.id)">
+      (click)="deleteConfirm(post.id)">
         <i style="font-size:24px" class='fas'>&#xf2ed;</i>
       </a>
     </span>
@@ -22,27 +49,27 @@
     </span>
 
     <div
-      style="text-align: center; margin-bottom: 5px;
-      font-size: 20px; margin-top: 10px;">{{ post.titolo }}</div>
+      style="text-align: left; margin-bottom: 5px;
+      font-size: 20px; margin-top: 10px; margin-left: 25px; margin-bottom: 10px;">{{ post.titolo }}</div>
 
-    <img class="center" src="{{ post.immagine }}" width="590" height="590">
+    <img class="center" src="{{ post.immagine }}" width="550" height="550">
 
-    <div style="margin:10px;">{{ post.descrizione }}</div>
+    <div style="margin:25px; font-size: 16px;">{{ post.descrizione }}</div>
     <!-- LIKE E UNLIKE -->
-    <div style="font-weight: bold;
-    float: unset; display: inline; margin: 10px;">
-    <span *ngIf="post.likes.length > 0">{{ post.likes.length }} like</span>
-    <span *ngIf="post.likes.length > 0 && post.unlikes.length > 0">, </span>
-    <span *ngIf="post.unlikes.length > 0">{{ post.unlikes.length}} unlike </span>
-    </div>
-
-    <div style="display: inline; float: right; margin: 5px;">
-      <div style="display: inline; margin-right: 10px;"><a style="text-decoration: none; color: black; cursor: pointer">
-        <i style="font-size:24px" class='far'>&#xf164;</i>
+    <div style="font-weight: bold; float: unset; display: inline; margin: 25px; font-size: 20px;">
+      <span style="position:static">
+      <div style="display: inline; left: 10px"><a style="text-decoration: none; color: black; cursor: pointer">
+        <i style="font-size:30px" class='far'>&#xf164;</i>
       </a></div>
-      <a style="text-decoration: none; color: black; cursor: pointer;">
-        <i style="font-size:24px" class='far'>&#xf165;</i>
-      </a>
+    </span>
+      <span style="margin-left: 10px;" *ngIf="post.likes.length > 0">{{ post.likes.length }} </span>
+
+      <span style="position: static; margin-left: 30px">
+        <a style="text-decoration: none; color: black; cursor: pointer;">
+          <i style="font-size:30px" class='far'>&#xf165;</i>
+        </a>
+        </span>
+        <span style="margin-left: 10px;" *ngIf="post.unlikes.length > 0">{{ post.unlikes.length}} </span>
     </div>
   </div>
 </div>

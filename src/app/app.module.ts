@@ -14,6 +14,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfiloComponent } from './profilo/profilo.component';
 import { NewPostComponent } from './post/new-post/new-post.component';
 import { EditPostComponent } from './post/edit-post/edit-post.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DeleteModalComponent } from './modals/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +28,17 @@ import { EditPostComponent } from './post/edit-post/edit-post.component';
     NavbarComponent,
     ProfiloComponent,
     EditPostComponent,
-    NewPostComponent
+    NewPostComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

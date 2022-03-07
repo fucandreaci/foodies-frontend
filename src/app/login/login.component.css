@@ -1,7 +1,9 @@
 .box-centrato{
-    width: 700px;
-    height:1000px;
-    margin: 15px 15px 5px 15px;
+    width: 500px;
+    height: 100%;
+    /* margin: 15px 15px 5px 15px; */
+    margin: auto;
+    margin-top: 200px;
 }
 
 input.ng-invalid.ng-touched{
